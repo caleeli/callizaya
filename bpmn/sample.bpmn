@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://sourceforge.net/bpmn/definitions/_1559425066298" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Yaoqiang BPMN Editor" exporterVersion="5.3" expressionLanguage="http://www.w3.org/1999/XPath" id="_1559425066298" name="" targetNamespace="http://sourceforge.net/bpmn/definitions/_1559425066298" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <process id="PROCESS_1" isClosed="false" isExecutable="true" processType="None">
+    <extensionElements>
+      <yaoqiang:description/>
+      <yaoqiang:pageFormat height="841.8897637795276" imageableHeight="831.8897637795276" imageableWidth="588.1102362204724" imageableX="5.0" imageableY="5.0" orientation="0" width="598.1102362204724"/>
+      <yaoqiang:page background="#FFFFFF" horizontalCount="1" verticalCount="1"/>
+    </extensionElements>
+    <startEvent id="_2" isInterrupting="true" name="Register an user" parallelMultiple="false">
+      <documentation id="_2_D_1" textFormat="text/plain"><![CDATA[@icon(fas fa-address-card)]]></documentation>
+      <outgoing>_4</outgoing>
+      <outputSet/>
+    </startEvent>
+    <userTask completionQuantity="1" id="_3" implementation="#/sample/user" isForCompensation="false" name="Get User Info" startQuantity="1">
+      <incoming>_4</incoming>
+      <outgoing>_17</outgoing>
+    </userTask>
+    <sequenceFlow id="_4" sourceRef="_2" targetRef="_3"/>
+    <scriptTask completionQuantity="1" id="_5" isForCompensation="false" name="Create User" scriptFormat="application/x-php" startQuantity="1">
+      <documentation id="_5_D_1" textFormat="text/plain"><![CDATA[@console(_6)]]></documentation>
+      <incoming>_12</incoming>
+      <outgoing>_8</outgoing>
+      <script><![CDATA[<?php
+
+use App\User;
+use Illuminate\Support\Facades\Hash;
+
+$user = User::create([
+  'name' => $model->data->user->name,
+  'email' => $model->data->user->email,
+  'password' => Hash::make($model->data->user->password),
+]);
+
+echo "Usuario creado. Id = " . $user->id;]]></script>
+    </scriptTask>
+    <endEvent id="_7" name="script completed">
+      <incoming>_8</incoming>
+      <inputSet/>
+    </endEvent>
+    <sequenceFlow id="_8" sourceRef="_5" targetRef="_7"/>
+    <userTask completionQuantity="1" id="_6" implementation="#/sample/console" isForCompensation="false" name="Console" startQuantity="1">
+      <incoming>_11</incoming>
+      <outgoing>_14</outgoing>
+    </userTask>
+    <parallelGateway gatewayDirection="Diverging" id="_9">
+      <incoming>_17</incoming>
+      <outgoing>_11</outgoing>
+      <outgoing>_12</outgoing>
+    </parallelGateway>
+    <sequenceFlow id="_11" sourceRef="_9" targetRef="_6"/>
+    <sequenceFlow id="_12" sourceRef="_9" targetRef="_5"/>
+    <endEvent id="_13" name="console closed">
+      <incoming>_14</incoming>
+      <inputSet/>
+    </endEvent>
+    <sequenceFlow id="_14" sourceRef="_6" targetRef="_13"/>
+    <sequenceFlow id="_17" sourceRef="_3" targetRef="_9"/>
+  </process>
+  <bpmndi:BPMNDiagram id="Yaoqiang_Diagram-PROCESS_1" name="Untitled Diagram" resolution="96.0">
+    <bpmndi:BPMNPlane bpmnElement="PROCESS_1">
+      <bpmndi:BPMNShape bpmnElement="_2" id="Yaoqiang-_2">
+        <dc:Bounds height="32.0" width="32.0" x="280.25" y="286.25"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="93.0" x="249.75" y="326.77"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_3" id="Yaoqiang-_3">
+        <dc:Bounds height="55.0" width="85.0" x="372.25" y="274.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="76.0" x="376.75" y="294.77"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_5" id="Yaoqiang-_5">
+        <dc:Bounds height="55.0" width="85.0" x="619.25" y="227.25"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="69.0" x="627.25" y="247.27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_7" id="Yaoqiang-_7">
+        <dc:Bounds height="32.0" width="32.0" x="764.25" y="238.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="96.0" x="732.25" y="279.27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_6" id="Yaoqiang-_6">
+        <dc:Bounds height="55.0" width="85.0" x="619.25" y="322.25"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="50.0" x="636.75" y="342.27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_9" id="Yaoqiang-_9">
+        <dc:Bounds height="42.0" width="42.0" x="517.25" y="281.25"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="535.25" y="325.25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_13" id="Yaoqiang-_13">
+        <dc:Bounds height="32.0" width="32.0" x="764.25" y="333.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="86.0" x="737.25" y="374.27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_17" id="Yaoqiang-_17">
+        <di:waypoint x="457.2058823529411" y="302.25"/>
+        <di:waypoint x="517.3676470588235" y="302.25"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="484.29" y="292.77"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_14" id="Yaoqiang-_14">
+        <di:waypoint x="704.2058823529411" y="349.75"/>
+        <di:waypoint x="764.209457849765" y="349.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="731.21" y="340.27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12" id="Yaoqiang-_12">
+        <di:waypoint x="559.0441176470587" y="302.25"/>
+        <di:waypoint x="619.2058823529411" y="254.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="586.25" y="269.15"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11" id="Yaoqiang-_11">
+        <di:waypoint x="559.0441176470587" y="302.25"/>
+        <di:waypoint x="619.2058823529411" y="349.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="586.25" y="316.4"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8" id="Yaoqiang-_8">
+        <di:waypoint x="704.2058823529411" y="254.75"/>
+        <di:waypoint x="764.209457849765" y="254.75"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="731.21" y="245.27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="Yaoqiang-_4">
+        <di:waypoint x="312.2050645876658" y="302.25"/>
+        <di:waypoint x="372.2058823529411" y="302.25"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="18.96" width="6.0" x="339.21" y="292.77"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
