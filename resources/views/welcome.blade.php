@@ -116,7 +116,7 @@
                             <span class="bg-base-color d-inline-block mt-4 sep-line-medium-thick"></span>
 
                             <h2 class="font-alt font-w-600 letter-spacing-2 mb-3 mt-3 text-uppercase text-white title-xs-extra-large title-extra-large-3">
-                                GESTIÓN DE PROYECTOS
+                                 TECNOLOGÍA DE CALIDAD
                             </h2>
 
                             <span class="d-block font-alt letter-spacing-2 mb-3 mt-4 text-large text-uppercase text-white">
