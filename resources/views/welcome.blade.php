@@ -433,7 +433,7 @@
                 <div class="row justify-content-center pb-5">
                     <div class="col-lg-9 pb-lg-4 text-center">
                         <h3 class="font-alt font-w-600 letter-spacing-2 text-uppercase title-xs-small title-extra-large-2">Nuestros Servicios</h3>
-                        <p class="font-alt mb-0 mt-3 text-xs-large text-uppercase title-medium">We are experts in developing your business</p>
+                        <p class="font-alt mb-0 mt-3 text-xs-large text-uppercase title-medium">Nosotros somos expertos en desarrollar tu negocio</p>
                         <span class="bg-base-color d-inline-block mt-4 sep-line-thick-long"></span>
                     </div>
                     <!-- //.col-lg-9 -->
