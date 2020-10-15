@@ -500,7 +500,7 @@
                     <div class="col-lg-10 text-center">
                         <i class="fa fa-quote-right text-base-color title-extra-large-3"></i>
                         <h3 class="d-block mt-4 font-alt text-white title-extra-large">"Tan asombrosos son los hechos en esta conexión que parecería que el creador mismo había diseñado este planeta".</h3>
-                        <span class="d-block mt-4 font-alt text-base-color title-extra-large">(Warren Buffet)</span>
+                        <span class="d-block mt-4 font-alt text-base-color title-extra-large">(Nikola Tesla)</span>
                     </div>
                     <!-- //.col-lg-10 -->
                 </div>
