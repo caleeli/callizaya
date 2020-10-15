@@ -463,7 +463,7 @@
                             </div>
                             <!-- //.block-icon -->
                             
-                            <span class="d-block font-alt letter-spacing-2 mt-4 text-uppercase title-medium">Graphic Design</span>
+                            <span class="d-block font-alt letter-spacing-2 mt-4 text-uppercase title-medium">Diseño Grafico</span>
                             <span class="bg-base-color d-inline-block mt-2 sep-line"></span>
                             <p class="mt-2 text-large">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
                         </div>
