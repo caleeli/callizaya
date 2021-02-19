@@ -16,8 +16,19 @@ class BloggerController extends Controller
     public function random(Request $request)
     {
         $cobro = $request->input('cobro', 800) * 1;
+        $tipo = $request->input('tipo', 'random');
+        if ($tipo === 'subida') {
+            $min = -5;
+            $max = 10;
+        } elseif ($tipo === 'bajada') {
+            $min = -10;
+            $max = 5;
+        } else {
+            $min = -10;
+            $max = 10;
+        }
         $T= 9;
-        $this->preciosBTC = $this->randPreciosBTC($T);
+        $this->preciosBTC = $this->randPreciosBTC($T, $min, $max);
         file_put_contents(\storage_path('app/precios.json'), json_encode($this->preciosBTC));
         return \redirect('/zoe?cobro=' . $cobro);
     }
@@ -25,11 +36,12 @@ class BloggerController extends Controller
     public function zoe(Request $request)
     {
         $cobro = $request->input('cobro', 800) * 1;
+        $peor = $request->input('peor', 0) * 1;
         $this->preciosBTC = json_decode(file_get_contents(\storage_path('app/precios.json')));
-        return $this->optimizar($cobro);
+        return $this->optimizar($cobro, $peor);
     }
 
-    private function optimizar($minCobro)
+    private function optimizar($minCobro, $peor)
     {
         $max = -1;
         $best = null;
@@ -43,7 +55,10 @@ class BloggerController extends Controller
             } else {
                 $value = $res['cobros'] + $res['billeteraUSD'] + $res['capitalUSD'];
             }
-            if ($value > $max) {
+            if ($peor) {
+                $value = -$value;
+            }
+            if (!$best || $value > $max) {
                 $best = $res;
                 $max = $value;
                 $maxI = $i;
@@ -122,8 +137,8 @@ class BloggerController extends Controller
                 $cobros += $billeteraUSD;
                 $billetera = 0;
             } elseif ($usrAction === 1) {
-                $acciones[] = ['CONVERTIR', $billetera, $billeteraUSD, $precioBTC, $total];
                 $moneda = $moneda === 'BTC' ? 'USD' : 'BTC';
+                $acciones[] = ["CONVERTIR({$moneda})", $billetera, $billeteraUSD, $precioBTC, $total];
                 if ($moneda === 'USD') {
                     $capital = $capital * $precioBTC;
                     $billetera = $billetera * $precioBTC;
@@ -140,12 +155,12 @@ class BloggerController extends Controller
         return compact('cobros', 'capital', 'billeteraUSD', 'capitalUSD', 'acciones');
     }
 
-    private function randPreciosBTC($T)
+    private function randPreciosBTC($T, $min, $max)
     {
         $precioBTC = 39000;
         $preciosBTC = [];
         for ($i=0; $i<$T; $i++) {
-            $btcAction = rand(-10, 10); // -1=baja 0=se mantiene 1=sube
+            $btcAction = rand($min, $max); // -1=baja 0=se mantiene 1=sube
             $precioBTC = min(80000, max(9000, $precioBTC+ 300 * $btcAction));
             $preciosBTC[] = $precioBTC;
         }

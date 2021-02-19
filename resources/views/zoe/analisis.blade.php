@@ -1,5 +1,5 @@
 <pre>
-    <a href='/zoe/random{{$query}}'>RANDOM</a>
+    <a href='/zoe/random{{$query}}'>RANDOM</a>  <a href='/zoe/random?tipo=bajada'>RANDOM BAJADA</a>  <a href='/zoe/random?tipo=subida'>RANDOM SUBIDA</a>  <a href='/zoe{{$query}}'>MEJOR ESTRATEGIA</a>  <a href='/zoe?cobro=0&peor=1'>PEOR ESTRATEGIA</a>
     <svg viewBox="0 0 {{$ejeX}} {{ $maxY - $minY}}" style="width: {{$width}}px; height: {{$height}}px">
     <polyline points="{{ $points }}" style="fill:none;stroke:black;stroke-width:100"></polyline>
     <polyline points="{{ $points2 }}" style="fill:none;stroke:blue;stroke-width:100"></polyline>
