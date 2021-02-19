@@ -135,6 +135,8 @@ class BloggerController extends Controller
                 $acciones[] = ['MANTENER', $billetera, $billeteraUSD, $precioBTC, $total];
             }
         }
+        $billeteraUSD = $moneda === 'BTC' ? $billetera * $precioBTC : $billetera;
+        $capitalUSD = $moneda === 'BTC' ? $capital * $precioBTC : $capital;
         return compact('cobros', 'capital', 'billeteraUSD', 'capitalUSD', 'acciones');
     }
 
