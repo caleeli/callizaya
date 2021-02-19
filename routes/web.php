@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BloggerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Socialite routes
 Route::get('login/{provider}', [LoginController::class, 'redirectToProvider']);
 Route::get('login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
+Route::get('blogger', [BloggerController::class, 'prepare']);
+Route::get('zoe', [BloggerController::class, 'zoe']);
+Route::get('zoe/replay/{n}/{i}', [BloggerController::class, 'replay']);
+Route::get('zoe/random', [BloggerController::class, 'random']);

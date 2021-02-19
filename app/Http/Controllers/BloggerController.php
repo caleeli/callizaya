@@ -18,14 +18,14 @@ class BloggerController extends Controller
         $cobro = $request->input('cobro', 800) * 1;
         $T= 9;
         $this->preciosBTC = $this->randPreciosBTC($T);
-        file_put_contents(\storage_path('precios.json'), json_encode($this->preciosBTC));
+        file_put_contents(\storage_path('app/precios.json'), json_encode($this->preciosBTC));
         return \redirect('/zoe?cobro=' . $cobro);
     }
 
     public function zoe(Request $request)
     {
         $cobro = $request->input('cobro', 800) * 1;
-        $this->preciosBTC = json_decode(file_get_contents(\storage_path('precios.json')));
+        $this->preciosBTC = json_decode(file_get_contents(\storage_path('app/precios.json')));
         return $this->optimizar($cobro);
     }
 
@@ -181,7 +181,7 @@ class BloggerController extends Controller
         $val = ($val + 1) % self::ACTIONS;
         $n1 = $n % $pos;
         $new = $n1 + $val * $pos + $m2 * $pos2;
-        $this->preciosBTC = json_decode(file_get_contents(\storage_path('precios.json')));
+        $this->preciosBTC = json_decode(file_get_contents(\storage_path('app/precios.json')));
         $best = $this->simular($new);
         $value = $best['cobros'];//max(1, $res['cobros']/ 200) + $res['billeteraUSD'] + $res['capitalUSD'];
         return $this->printBest($best, $value, $new);
