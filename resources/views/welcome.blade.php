@@ -463,7 +463,7 @@
                             </div>
                             <!-- //.block-icon -->
                             
-                            <span class="d-block font-alt letter-spacing-2 mt-4 text-uppercase title-medium">Graphic Design</span>
+                            <span class="d-block font-alt letter-spacing-2 mt-4 text-uppercase title-medium">Diseño Grafico</span>
                             <span class="bg-base-color d-inline-block mt-2 sep-line"></span>
                             <p class="mt-2 text-large">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
                         </div>
@@ -499,8 +499,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-center">
                         <i class="fa fa-quote-right text-base-color title-extra-large-3"></i>
-                        <h3 class="d-block mt-4 font-alt text-white title-extra-large">"The business schools reward difficult complex behavior more than simple behavior, but simple behavior is more effective".</h3>
-                        <span class="d-block mt-4 font-alt text-base-color title-extra-large">(Warren Buffet)</span>
+                        <h3 class="d-block mt-4 font-alt text-white title-extra-large">"Tan asombrosos son los hechos en esta conexión que parecería que el creador mismo había diseñado este planeta".</h3>
+                        <span class="d-block mt-4 font-alt text-base-color title-extra-large">(Nikola Tesla)</span>
                     </div>
                     <!-- //.col-lg-10 -->
                 </div>
