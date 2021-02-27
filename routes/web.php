@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BloggerController;
+use App\Http\Controllers\ZoeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,4 @@ Route::get('blogger', [BloggerController::class, 'prepare']);
 Route::get('zoe', [BloggerController::class, 'zoe']);
 Route::get('zoe/replay/{n}/{i}', [BloggerController::class, 'replay']);
 Route::get('zoe/random', [BloggerController::class, 'random']);
+Route::get('zoe/crypto/{coin}', [ZoeController::class, 'criptoHistory']);
