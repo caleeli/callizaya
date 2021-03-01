@@ -104,11 +104,75 @@ function Fourier($input, $isign)
     $sqr = sqrt(2/$n);
     for ($i = 1; $i < $len; $i++) {
         $data[$i] = $data[$i] * $sqr;                   # Normalize the data
-      if (abs($data[$i]) < 1E-8) {
-          $data[$i] = 0;
-      }  # Let's round small numbers to zero
+        if (abs($data[$i]) < 1E-8) {
+            $data[$i] = 0;
+        }  # Let's round small numbers to zero
       $input[($i-1)] = $data[$i];                # We need to shift array back (see beginning)
     }
 
     return $input;
+}
+
+
+function FiltroAmplitud($data, $value = 0.02)
+{
+    $max = 0;
+    foreach ($data as $v) {
+        $max = max($max, abs($v));
+    }
+    $filtro = $max * $value;
+    foreach ($data as $i => $v) {
+        $data[$i] = abs($v) >= $filtro ? $v : 0;
+    }
+    return $data;
+}
+
+
+function Promediar($data, $steps = 2)
+{
+    $sum = 0;
+    $n = 0;
+    $last = count($data) - 1;
+    foreach ($data as $i => $v) {
+        $sum += $v;
+        $n++;
+        if (($i % $steps) === 0 || $i === $last) {
+            $y1 = $data[$i - $n + 1];
+            $y2 = $v;
+            $B = ($y2 - $y1) / $n;
+            $t = 0;
+            for ($j = $i - $n + 1; $j <= $i; $j++) {
+                $data[$j] = $y1 + $B * $t;
+                $t++;
+            }
+            $sum = 0;
+            $n = 0;
+        }
+    }
+    return $data;
+}
+
+function Derivar($data)
+{
+    $dx = [];
+    for ($i=1, $l=count($data); $i < $l; $i++) {
+        $dx[] = $data[$i] - $data[$i - 1];
+    }
+    return $dx;
+}
+
+function Maximos($data)
+{
+    $derivada = Derivar($data);
+    $prev = $derivada[0];
+    $res = [];
+    foreach ($derivada as $v) {
+        $isMax = $v == 0 || ($prev * $v < 0);
+        if ($isMax) {
+            $res[] = $v;
+        } else {
+            $res[] = 0;
+        }
+    }
+    return $res;
 }

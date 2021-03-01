@@ -5,6 +5,11 @@
         <circle cx="{{ $label['x'] }}" cy="{{ $label['y'] }}" fill="#ff000088" r="5">
             <title>{{ $label['title'] }}</title>
         </circle>
+        @endforeach
+        @foreach($maximos as $label)
+        <circle cx="{{ $label['x'] }}" cy="{{ $label['y'] }}" fill="#ff000088" r="5">
+            <title>{{ $label['title'] }}</title>
+        </circle>
         <text x="{{ $label['x'] }}" y="{{ $label['y'] }}" fill="red" font-size="12" title="{{ $label['label'] }}">
             {{ $label['label'] }}
             <title>{{ $label['title'] }}</title>

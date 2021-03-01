@@ -16,13 +16,14 @@ class Chart extends Component
     private $start = 0;
     private $inc = 1;
     private $labels = [];
+    private $maximos = [];
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $points, $operation="", $fftP1="up", $start=0, $inc=1)
+    public function __construct(array $points, $operation="", $fftP1="up", $start=0, $inc=1, $separacion = 2, $showMax = false)
     {
         $this->fftP1 = $fftP1;
         $this->start = $start;
@@ -38,7 +39,7 @@ class Chart extends Component
             $maxY = max($maxY, $y);
             $minY = min($minY, $y);
         }
-        //$maxY = $maxY * 1.1;
+        $maxY = $maxY * 1.1;
         $factorY = $this->ejeY / ($maxY - $minY);
         $result = [];
         $this->labels = [];
@@ -46,12 +47,12 @@ class Chart extends Component
             $x = $i * $factorX;
             $y = ($maxY - $v)  * $factorY;
             $result[] = "$x, $y";
-            if (($i % 4)===0) {
+            if (($i % $separacion)===0) {
                 $time = ($this->start + $this->inc * $i)/1000;
                 $this->labels[] = [
                     'x' => $x,
                     'y' => $y,
-                    'label' => ($i % 8)===0 ? date('M-d', $time) : '',
+                    'label' => ($i % ($separacion * 4))===0 ? date('M-d', $time) : '',
                     'title' => date('M-d', $time) . ': ' . number_format($v, 0),
                 ];
             }
@@ -61,6 +62,7 @@ class Chart extends Component
         $this->height = round($this->width / $this->ejeX * ($maxY - $minY) * $factorY);
         $this->maxY = $maxY;
         $this->minY = $minY;
+        $this->maximos = $showMax ? $this->maximos($points, $maxY, $factorX, $factorY) : [];
     }
 
     /**
@@ -81,6 +83,7 @@ class Chart extends Component
             'start' => $this->start,
             'inc' => $this->inc,
             'labels' => $this->labels,
+            'maximos' => $this->maximos,
         ]);
     }
 
@@ -88,15 +91,15 @@ class Chart extends Component
     {
         switch ($op) {
             case 'dx':
-                $dx = [];
-                for ($i=1, $l=count($data); $i < $l; $i++) {
-                    $dx[] = $data[$i] / $data[$i - 1];
-                }
-                return $dx;
+                return Derivar($data);
             case 'fft':
                 // Transformada de Fourier
                 $data = $this->prepareFFTData($data);
                 return Fourier($data, 1);
+            case 'ifft':
+                // Transformada de Fourier
+                //$data = $this->prepareFFTData($data);
+                return Fourier($data, -1);
             case 'pfft':
                 // Transformada de Fourier
                 $data = $this->prepareFFTData($data);
@@ -109,14 +112,17 @@ class Chart extends Component
                 foreach ($data as $v) {
                     $max = max($max, abs($v));
                 }
-                $filtro = $max * 0.03;
+                //$filtro = $max * 0.02;
+                $filtro = $max * 0.011; // para -28 days
                 $count = count($data);
                 $filMin = $count * 0.0;
                 $filMax = $count * 0.0;
                 foreach ($data as $i => $v) {
                     $data[$i] = abs($v) >= $filtro && $i >= $filMin && $i <= ($count - $filMax) ? $v : 0;
                 }
-                return Fourier($data, -1);
+                $result = Fourier($data, -1);
+                $result = Promediar(Promediar(Promediar(Promediar(Promediar($result, 2), 3), 4), 5), 6);
+                return $result;
             }
         return $data;
     }
@@ -141,5 +147,25 @@ class Chart extends Component
             $data[$i] = $last;//\rand(36000, 39000);
         }
         return $data;
+    }
+
+    private function maximos($data, $maxY, $factorX, $factorY)
+    {
+        $derivada = Derivar($data);
+        $prev = $derivada[0];
+        $res = [];
+        foreach ($derivada as $i => $v) {
+            $isMax = $v == 0 || ($prev * $v < 0);
+            $prev = $v;
+            if ($isMax) {
+                $time = ($this->start + $this->inc * $i) / 1000;
+                $y = ($maxY - $data[$i])  * $factorY;
+                $label = date('M-d', $time);
+                $title = date('M-d', $time) . ': ' . number_format($data[$i], 0);
+                $x = $i * $factorX;
+                $res[] = compact('x', 'y', 'label', 'title');
+            }
+        }
+        return $res;
     }
 }
