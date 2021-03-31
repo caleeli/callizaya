@@ -135,7 +135,7 @@ class Chart extends Component
     private function cutFFTData($data)
     {
         $size = pow(2, floor(log(count($data), 2)));
-        return array_slice($data, 0, $size);
+        return array_slice($data, count($data) - $size, $size);
     }
 
     private function completeFFTData($data)

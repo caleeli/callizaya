@@ -33,5 +33,6 @@ Route::get('zoe', [BloggerController::class, 'zoe']);
 Route::get('zoe/replay/{n}/{i}', [BloggerController::class, 'replay']);
 Route::get('zoe/random', [BloggerController::class, 'random']);
 Route::get('zoe/crypto/{coin}', [ZoeController::class, 'criptoHistory']);
+Route::get('zoe/crypto/{coin}/{days}', [ZoeController::class, 'criptoProyection']);
 Route::get('zoe/pix2pix', [ZoeController::class, 'pix2pix']);
 Route::get('zoe/sube_baja', [ZoeController::class, 'probarSubeBaja']);

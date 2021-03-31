@@ -10,14 +10,14 @@ class ZoeController extends Controller
     private $MaxVal = 600000;
     private $BaseVal = 100000;
 
-    public function criptoHistory($coin)
+    public function criptoProyection($coin, $days = '28')
     {
         $curl = curl_init();
         $coin = \strtoupper($coin);
         $date = new DateTime();
         $end_date = $date->format('Y-m-d');
-        //$date->modify('-3 month'); $separacion = 2;
-        $date->modify('-28 days');$separacion = 16;
+        $date->modify("-{$days} days");
+        $separacion = 16;
         $start_date = $date->format('Y-m-d');
         curl_setopt_array($curl, [
             //CURLOPT_URL => 'https://production.api.coindesk.com/v2/price/values/BTC?start_date=2020-02-27T17:32&end_date=2021-02-27T23:59&ohlc=false',
@@ -50,6 +50,11 @@ class ZoeController extends Controller
             return $data[1];
         }, $response->data->entries);
         return view('zoe.btc', \compact('points', 'start', 'inc', 'separacion'));
+    }
+
+    public function criptoHistory($coin)
+    {
+        return $this->criptoProyection($coin, '28');
     }
 
     private function getData($date, $coin, $period= '-28 days')
