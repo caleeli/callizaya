@@ -12,15 +12,40 @@ class ZoeController extends Controller
 
     public function criptoProyection($coin, $days = '28')
     {
-        $curl = curl_init();
-        $coin = \strtoupper($coin);
+        $coins = explode(',', \strtoupper($coin));
         $date = new DateTime();
         $end_date = $date->format('Y-m-d');
         $date->modify("-{$days} days");
         $separacion = 16;
         $start_date = $date->format('Y-m-d');
+        $rows = [];
+        foreach ($coins as $coin) {
+            $response = $this->getRawData($coin, $start_date, $end_date);
+            $rows[] = $response->data->entries;
+        }
+        $start = $response->data->entries[0][0];
+        $inc = $response->data->entries[1][0] - $start;
+        if (count($rows) === 1) {
+            $points = \array_map(function ($data) {
+                return $data[1];
+            }, $response->data->entries);
+        } else {
+            $points = \array_map(function ($a, $b) {
+                return $a[1] / $b[1];
+            }, ...$rows);
+        }
+        return view('zoe.btc', \compact('points', 'start', 'inc', 'separacion'));
+    }
+
+    public function criptoHistory($coin)
+    {
+        return $this->criptoProyection($coin, '28');
+    }
+
+    private function getRawData($coin, $start_date, $end_date)
+    {
+        $curl = curl_init();
         curl_setopt_array($curl, [
-            //CURLOPT_URL => 'https://production.api.coindesk.com/v2/price/values/BTC?start_date=2020-02-27T17:32&end_date=2021-02-27T23:59&ohlc=false',
             CURLOPT_URL => "https://production.api.coindesk.com/v2/price/values/{$coin}?start_date={$start_date}T00:00&end_date={$end_date}T23:59&ohlc=false",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -39,22 +64,9 @@ class ZoeController extends Controller
                 'TE: Trailers'
             ],
         ]);
-
         $response = json_decode(curl_exec($curl));
-
         curl_close($curl);
-
-        $start = $response->data->entries[0][0];
-        $inc = $response->data->entries[1][0] - $start;
-        $points = \array_map(function ($data) {
-            return $data[1];
-        }, $response->data->entries);
-        return view('zoe.btc', \compact('points', 'start', 'inc', 'separacion'));
-    }
-
-    public function criptoHistory($coin)
-    {
-        return $this->criptoProyection($coin, '28');
+        return $response;
     }
 
     private function getData($date, $coin, $period= '-28 days')
@@ -233,13 +245,17 @@ class ZoeController extends Controller
             $sumPred = 0;
             $n = 0;
             for ($j = 0 ; $j < $inc ; $j++) {
-                if ($i + $j >= 512) break;
+                if ($i + $j >= 512) {
+                    break;
+                }
                 $sumReal += $real[$i + $j];
                 $sumPred += $pred[$i + $j];
                 $n++;
             }
             for ($j = 0 ; $j < $inc ; $j++) {
-                if ($i + $j > 512) break;
+                if ($i + $j > 512) {
+                    break;
+                }
                 $real[$i + $j] = $sumReal / $n;
                 $pred[$i + $j] = $sumPred / $n;
             }
@@ -273,7 +289,7 @@ class ZoeController extends Controller
 
     private function checkSubeBaja($val, $prev, $minDiff = 300)
     {
-        if ($minDiff === 1 ) {
+        if ($minDiff === 1) {
             $subeBaja = $val - $prev;
         } else {
             $subeBaja = intdiv($val - $prev, $minDiff);
