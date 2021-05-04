@@ -53,7 +53,7 @@ class Chart extends Component
                     'x' => $x,
                     'y' => $y,
                     'label' => ($i % ($separacion * 4))===0 ? date('M-d', $time) : '',
-                    'title' => date('M-d', $time) . ': ' . number_format($v, 0),
+                    'title' => date('M-d', $time) . ': ' . number_format($v, 2),
                 ];
             }
         }
@@ -105,31 +105,42 @@ class Chart extends Component
                 $data = $this->prepareFFTData($data);
                 return $data;
             case 'filtro_mayor':
-                // Transformada y filtrar solo grandes
-                $data = $this->prepareFFTData($data);
-                $data = Fourier($data, 1);
-                $max = 0;
-                foreach ($data as $v) {
-                    $max = max($max, abs($v));
-                }
-                //$filtro = $max * 0.02;
-                $filtro = $max * 0.011; // para -28 days
-                $count = count($data);
-                $filMin = $count * 0.0;
-                $filMax = $count * 0.0;
-                foreach ($data as $i => $v) {
-                    $data[$i] = abs($v) >= $filtro && $i >= $filMin && $i <= ($count - $filMax) ? $v : 0;
-                }
-                $result = Fourier($data, -1);
-                $result = Promediar(Promediar(Promediar(Promediar(Promediar($result, 2), 3), 4), 5), 6);
-                return $result;
+                $prev = $this->filtro_mayor($data, [], 0.02);
+                array_unshift($prev, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0);
+                $prev = $this->filtro_mayor($data, [], 0.01);
+                array_unshift($prev, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0);
+                //$prev = $this->filtro_mayor($data, $prev);
+                return $this->filtro_mayor($data, $prev, 0.005);
             }
         return $data;
     }
 
-    private function prepareFFTData($data)
+    private function filtro_mayor(array $data, array $previous = [], $k = 0.011)
     {
-        return $this->fftP1 === 'up' ? $this->completeFFTData($data) : $this->cutFFTData($data);
+        // Transformada y filtrar solo grandes
+        $data = $this->prepareFFTData($data, $previous);
+        $data = Fourier($data, 1);
+        $max = 0;
+        foreach ($data as $v) {
+            $max = max($max, abs($v));
+        }
+        //$filtro = $max * 0.02;
+        //$filtro = $max * 0.011; // para -28 days
+        $filtro = $max * $k; // para -28 days
+        $count = count($data);
+        $filMin = $count * 0.0;
+        $filMax = $count * 0.0;
+        foreach ($data as $i => $v) {
+            $data[$i] = abs($v) >= $filtro && $i >= $filMin && $i <= ($count - $filMax) ? $v : 0;
+        }
+        $result = Fourier($data, -1);
+        $result = Promediar(Promediar(Promediar(Promediar(Promediar($result, 2), 3), 4), 5), 6);
+        return $result;
+    }
+
+    private function prepareFFTData($data, $previous = [])
+    {
+        return $this->fftP1 === 'up' ? $this->completeFFTData($data, $previous) : $this->cutFFTData($data);
     }
 
     private function cutFFTData($data)
@@ -138,13 +149,13 @@ class Chart extends Component
         return array_slice($data, count($data) - $size, $size);
     }
 
-    private function completeFFTData($data)
+    private function completeFFTData($data, $previous=[])
     {
         $size = pow(2, ceil(log(count($data), 2)) +0);
         $j = count($data)-0;
         $last = $data[$j-1];
         for ($i=$j; $i < $size; $i++) {
-            $data[$i] = $last;//\rand(36000, 39000);
+            $data[$i] = $previous[$i] ?? $last;//\rand(36000, 39000);
         }
         return $data;
     }
