@@ -74,20 +74,16 @@ ini_set('SHORT_OPEN_TAG', true);
 				</button>
 				<div class="overlay overlay--menu">
 					<ul class="menu">
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 11</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Filosofía y Arte: Reflexiones sobre la canción popular latinoamericana</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 11</span><span class="hora"> 20:00&nbsp;</span><span class="evento">Galería Virtual: El arte y los procesos de transformación</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">jueves 12</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Filosofía y Arte: El arte como factor de transformación</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">viernes 13</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Taller: Arte y Filosofía del Renacimiento</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">sábado 14</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Taller: Arte y Filosofía del Renacimiento</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 18</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Filosofía y Sociedad: Filosofía y voluntariado como motor de cambio</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 11</span><span class="hora"> 19:00&nbsp;</span><span class="evento">ProcessMaker @ ProcessMaker Inc</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 11</span><span class="hora"> 20:00&nbsp;</span><span class="evento">Digital Government System @ Plurinational State of Bolivia.</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">jueves 12</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Comprehensive planning system @ Ministry of Development Planning</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">viernes 13</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Internal Audit System Emprender @ Development Financial Institution</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">sábado 14</span><span class="hora"> 19:00&nbsp;</span><span class="evento">SugarCRM integration @ Banco Economico</span></a></li>
 					</ul>
 				</div>
 				<div class="overlay overlay--info">
 					<p class="info">
-					Desde el año 2002, la UNESCO* ha establecido que el tercer jueves de noviembre de
-					cada año se celebre el Día Mundial de la Filosofía, promoviendo en todo el mundo el
-					interés por una actividad que históricamente se encuentra en el núcleo de todos los
-					avances civilizatorios de la Humanidad.
+						David Callizaya es un programador, diseñador y artista que se dedica a la creación de sistemas de información y comunicación.
 					</p>
 				</div>
 			</header>
