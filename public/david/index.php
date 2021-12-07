@@ -74,11 +74,11 @@ ini_set('SHORT_OPEN_TAG', true);
 				</button>
 				<div class="overlay overlay--menu">
 					<ul class="menu">
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 11</span><span class="hora"> 19:00&nbsp;</span><span class="evento">ProcessMaker @ ProcessMaker Inc</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">miércoles 11</span><span class="hora"> 20:00&nbsp;</span><span class="evento">Digital Government System @ Plurinational State of Bolivia.</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">jueves 12</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Comprehensive planning system @ Ministry of Development Planning</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">viernes 13</span><span class="hora"> 19:00&nbsp;</span><span class="evento">Internal Audit System Emprender @ Development Financial Institution</span></a></li>
-						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">sábado 14</span><span class="hora"> 19:00&nbsp;</span><span class="evento">SugarCRM integration @ Banco Economico</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">2021</span><span class="hora"> </span><span class="evento">ProcessMaker @ ProcessMaker Inc</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">2012</span><span class="hora"> </span><span class="evento">Digital Government System @ Plurinational State of Bolivia.</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">2015</span><span class="hora"> </span><span class="evento">Comprehensive planning system @ Ministry of Development Planning</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">2013</span><span class="hora"> </span><span class="evento">Internal Audit System Emprender @ Development Financial Institution</span></a></li>
+						<li class="menu__item"><a class="menu__link" href="#"><span class="dia">2015</span><span class="hora"> </span><span class="evento">SugarCRM integration @ Banco Economico</span></a></li>
 					</ul>
 				</div>
 				<div class="overlay overlay--info">
